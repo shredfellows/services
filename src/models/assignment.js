@@ -3,13 +3,15 @@
 const mongoose = require('mongoose');
 
 const assignmentSchema = mongoose.Schema({
-  coursesId: [  course: [ {type:mongoose.Schema.Types.ObjectId, ref:'course'}],
-  courseId:(type:Number, require:true),
-  assignmentID:(type:Number),
+  courseId:{type:String},
+  assignmentId:{type:Number},
+  code:{type:String},
+  notes:{type:String},
+  user: { type:mongoose.Schema.Types.ObjectId, ref:'user' },
 });
 
-courseSchema.pre('findCourse', function(next) {
-  this.populate('course');
+assignmentSchema.pre('findOne', function(next) {
+  this.populate('user');
   next();
 });
 
