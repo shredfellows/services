@@ -3,6 +3,10 @@
 import express from 'express';
 const router = express.Router();
 
+// 'nel' module to run code
+import nel from 'nel';
+const session = new nel.Session();
+
 // Dynamic Models
 // This will use a model matching /:model/ in all routes that have a model parameter
 import modelFinder from '../middleware/models.js';
@@ -42,6 +46,32 @@ router.delete('/api/v1/:model/:id', (req, res, next) => {
     .then(data => sendJSON(res, data))
     .catch(next);
 });
+
+// Route with single responsibility to test code
+router.post('/api/v1/code', (req, res) => {
+
+  const solution = {};
+  let code = req.body.code.trim();
+
+  session.execute(code, {
+    onSuccess: (output) => {
+      solution.onSuccess = output;
+    },
+    onError: (output) => {
+      solution.onError = output;
+    },
+    onStdout: (output) => {
+      solution.onStdout = output.trim();
+    },
+    onStderr: (output) => {
+      solution.onStderr = output;
+    },
+    afterRun: () => {
+      sendJSON(res, solution);
+    },
+  });
+});
+
 
 let sendJSON = (res,data) => {
   res.statusCode = 200;
