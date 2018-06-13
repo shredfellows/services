@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Shredfellows Backend Services",
   "main": "index.js",
   "scripts": {
     "db": "mongod --dbpath=/Users/john/codefellows/tmp/db",
@@ -29,5 +29,14 @@
     "morgan": "^1.9.0",
     "require-dir": "^1.0.0",
     "superagent": "^3.8.3"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shredfellows/services.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shredfellows/services/issues"
+  },
+  "homepage": "https://github.com/shredfellows/services#readme"
 }
