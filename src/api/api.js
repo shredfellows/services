@@ -53,6 +53,7 @@ router.post('/api/v1/code', (req, res) => {
 
   const solution = {};
   let onStdoutArray = [];
+  let onStderrArray = [];
 
   let code = req.body.code.trim();
   solution.input = code;
@@ -62,14 +63,15 @@ router.post('/api/v1/code', (req, res) => {
       solution.return = output.mime['text/plain'];
     },
     onError: (output) => {
-      solution.onError = output;
+      solution.error = output.error;
     },
     onStdout: (output) => {
       onStdoutArray.push(output);
-      solution.console = onStdoutArray;
+      solution['console.log'] = onStdoutArray;
     },
     onStderr: (output) => {
-      solution.onStderr = output;
+      onStderrArray.push(output);
+      solution['console.error'] = onStderrArray;
     },
     afterRun: () => {
       sendJSON(res, solution);
