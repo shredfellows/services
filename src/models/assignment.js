@@ -1,6 +1,8 @@
 'use strict';
 
-const mongoose = require('mongoose');
+
+import mongoose from 'mongoose';
+import User from 'user.js';
 
 const assignmentSchema = mongoose.Schema({
   courseId:{type:String},
