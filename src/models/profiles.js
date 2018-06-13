@@ -24,7 +24,7 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     return Promise.reject('VALIDATION ERROR: Not an existing user');
   }
 
-  return this.findOne({ userId: incoming.userId })
+  return this.findOne({ userId: incoming._id })
     .then(profile => {
       if (!profile) { throw new Error('User Not Found'); }
       console.log('Welcome Back', profile.username);
@@ -32,7 +32,7 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     })
     .catch(error => {
       return this.create({
-        // userId: incoming.userId,
+        userId: incoming._id,
         // name: incoming.name,
         username: incoming.username,
         email: incoming.email,
@@ -41,7 +41,7 @@ profileSchema.statics.createFromOAuth = function (incoming) {
 };
 
 profileSchema.methods.generateToken = function () {
-  return jwt.sign({ id: this.userId._id }, process.env.SECRET || 'changethis');
+  return jwt.sign({ id: this.userId }, process.env.SECRET || 'changeit');
 };
 
 profileSchema.pre('save', function (next) {
