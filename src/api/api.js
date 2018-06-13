@@ -2,6 +2,7 @@
 
 import express from 'express';
 const router = express.Router();
+import auth from '../auth/middleware.js';
 
 // 'nel' module to run code
 import nel from 'nel';
@@ -15,16 +16,33 @@ router.param('model', modelFinder);
 // In all cases, we just catch(next), which feeds any errors we get into the next() as a param
 // This fires off the error middleware automatically.  Otherwise, we send out a formatted JSON Response
 
-router.get('/api/v1/:model', (req,res,next) => {
+router.get('/api/v1/:model', auth, (req,res,next) => {
   req.model.find({})
     .then( data => sendJSON(res,data) )
     .catch( next );
 });
 
-router.get('/api/v1/:model/:id', (req,res,next) => {
+router.get('/api/v1/:model/:id', auth, (req,res,next) => {
+
+  let user = req.user;
+  console.log(user);
   req.model.findOne({_id:req.params.id})
     .then( data => sendJSON(res,data) )
     .catch( next );
+
+    //Getting this back from Ovi. How to pass to the 4 quadrant main page? As params?
+
+  //   let data = `{
+  //     “name”: “Find”,
+  //     “readme”: “http://...github/…./README.md”,
+  //     “video”: “http://youtube….”,
+  //     “challenges”: [
+  //       “http://….github/challenge1.md”,
+  // “http://….github/challenge2.md”,
+  //     ]
+  //   }`
+
+  // res.redirect('http://127.0.0.1:8080/main.html');
 });
 
 router.post('/api/v1/:model', (req,res,next) => {
@@ -44,6 +62,21 @@ router.delete('/api/v1/:model/:id', (req, res, next) => {
   req.model.findByIdAndDelete(req.params.id)
     .then(data => sendJSON(res, data))
     .catch(next);
+});
+
+router.post('/api/v1/:model/:id/:studentId', (req, res, next) => {
+
+  console.log(req.body);
+
+  if(!req.body.codeContent || !req.body.comments) {
+    return next('title or sample was not provided');
+  }
+    let record = new req.model(req.body);
+    record.save()
+      .then( data => sendJSON(res,data) )
+      .catch( next );
+  
+  res.sendStatus(418);
 });
 
 // Route with single responsibility to test code

@@ -13,7 +13,9 @@ export default (req, res, next) => {
 
         // Given a real user that must mean that our token was good. Let the user through.
         // in larger systems, you might want to attach an ACL or permissions to the req.user object here.
-        else { next(); }
+        else { 
+          req.user=user;
+          next(); }
       })
       .catch(next);
   };
@@ -74,6 +76,7 @@ export default (req, res, next) => {
     else if(authHeader.match(/bearer/i)) {
       // i.e. Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI
       let token = authHeader.replace(/bearer\s+/i, '');
+      console.log('token from auth middleware', token);
       authorize(token);
     }
   } catch(e) {
