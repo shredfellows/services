@@ -1,16 +1,25 @@
 'use strict';
 
-const mongoose = require('mongoose');
 
+import mongoose from 'mongoose';
+import User from 'user.js';
+
+
+//Create model to store the following info for each assignment: courseID(from canvas), assignmentID(from canvas), studentID (from users), notes(input from user), code(input from user).
 const assignmentSchema = mongoose.Schema({
-  coursesId: [  course: [ {type:mongoose.Schema.Types.ObjectId, ref:'course'}],
-  courseId:(type:Number, require:true),
-  assignmentID:(type:Number),
+  course_id:{type:String},
+  assignment_id:{type:Number},
+  student_id: { type:mongoose.Schema.Types.ObjectId, ref:'user' },
+  notes:{type:String},
+  code:{
+      challenge1:String,
+    }
 });
 
-courseSchema.pre('findCourse', function(next) {
-  this.populate('course');
+assignmentSchema.pre('save', function(next) {
+ this.populate('user');
   next();
 });
+
 
 export default mongoose.model('assignment', assignmentSchema);
