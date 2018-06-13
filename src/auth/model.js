@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
   email: {type: String, required: true},
+  profile: { type: mongoose.Schema.Types.ObjectId, ref: 'profiles' }
 });
 
 // Before we save, hash the plain text password
@@ -72,14 +73,16 @@ userSchema.statics.authenticate = function(auth) {
 };
 
 userSchema.statics.authorize = function(token) {
+  console.log(`I'm heeeeeere now`);
   let parsedToken = jwt.verify(token, process.env.SECRET || 'changeit');
   let query = {_id:parsedToken.id};
   return this.findOne(query)
     .then(user => {
       // looked up their role and then all capabilities
+      console.log(user);
       return user;
     })
-    .catch(error => error);
+    .catch(error => {console.log(`I'm heeeeeere`); error;});
 };
 
 // Compare a plain text password against the hashed one we have saved
