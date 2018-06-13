@@ -2,4 +2,5 @@
 Shredfellows Backend Services
 
 # branches
-[dev-branch]
+  * [dev-branch]
+  * [staging-branch]
