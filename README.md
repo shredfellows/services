@@ -7,6 +7,7 @@ Shred Fellows is a  living instructional platform that can be integrated into an
 ___
 
 **HEROKU (MASTER)** [https://shred-fellows-server.herokuapp.com/](https://shred-fellows-server.herokuapp.com/)
+
 **HEROKU (STAGING):** [https://shred-fellows-staging.herokuapp.com/](https://shred-fellows-staging.herokuapp.com/)
 
 **TRAVIS BUILD (STAGING):** [https://travis-ci.com/shredfellows/services](https://travis-ci.com/shredfellows/services)
