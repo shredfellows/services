@@ -6,6 +6,7 @@
 Shred Fellows is a  living instructional platform that can be integrated into any course, providing students a means of practice, self-study, and consistent curriculum delivery for short topics. Additionally, this could power a “Try Us Out” system where potential students could interact with an experience the uniquely Code Fellows methods of instruction.
 ___
 
+**HEROKU (MASTER)** [https://shred-fellows-server.herokuapp.com/](https://shred-fellows-server.herokuapp.com/)
 **HEROKU (STAGING):** [https://shred-fellows-staging.herokuapp.com/](https://shred-fellows-staging.herokuapp.com/)
 
 **TRAVIS BUILD (STAGING):** [https://travis-ci.com/shredfellows/services](https://travis-ci.com/shredfellows/services)
