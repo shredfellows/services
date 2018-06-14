@@ -4,9 +4,6 @@ import express from 'express';
 const router = express.Router();
 import auth from '../auth/middleware.js';
 
-// 'nel' module to run code
-import nel from 'nel';
-
 // Dynamic Models
 // This will use a model matching /:model/ in all routes that have a model parameter
 import modelFinder from '../middleware/models.js';
@@ -71,47 +68,13 @@ router.post('/api/v1/:model/:id/:studentId', (req, res, next) => {
   if(!req.body.codeContent || !req.body.comments) {
     return next('title or sample was not provided');
   }
-    let record = new req.model(req.body);
-    record.save()
-      .then( data => sendJSON(res,data) )
-      .catch( next );
+  let record = new req.model(req.body);
+  record.save()
+    .then( data => sendJSON(res,data) )
+    .catch( next );
   
   res.sendStatus(418);
 });
-
-// Route with single responsibility to test code
-router.post('/api/v1/code', (req, res) => {
-  
-  let session = new nel.Session();
-
-  const solution = {};
-  let onStdoutArray = [];
-  let onStderrArray = [];
-
-  let code = req.body.code.trim();
-  solution.input = code;
-
-  session.execute(code, {
-    onSuccess: (output) => {
-      solution.return = output.mime['text/plain'];
-    },
-    onError: (output) => {
-      solution.error = output.error;
-    },
-    onStdout: (output) => {
-      onStdoutArray.push(output);
-      solution['console.log'] = onStdoutArray;
-    },
-    onStderr: (output) => {
-      onStderrArray.push(output);
-      solution['console.error'] = onStderrArray;
-    },
-    afterRun: () => {
-      sendJSON(res, solution);
-    },
-  });
-});
-
 
 let sendJSON = (res,data) => {
   res.statusCode = 200;
