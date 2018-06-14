@@ -6,7 +6,7 @@ const app = require('../../../src/app.js');
 
 describe('API', () => {
 
-  const PORT = 8888;
+  const PORT = 3000;
   beforeAll( () => {
     app.start(PORT);
   });
@@ -14,17 +14,18 @@ describe('API', () => {
     app.stop();
   });
 
-  it('gets a 200 response on a good model', () => {
-    return superagent.get('http://localhost:8888/api/v1/bar')
+  it.only('gets a 200 response on a good model', () => {
+    return superagent.get('http://localhost:3000/api/v1/bar')
       .then(response => {
+        console.log('inside the then');
         expect(response.statusCode).toEqual(200);
       })
       .catch(console.err);
   });
 
   it('gets a 500 response on an invalid model', () => {
-    return superagent.get('http://localhost:8888/api/v1/foobar')
-      .then(console.log)
+    return superagent.get('http://localhost:3000/api/v1/foobar')
+      .then(Promise.reject)
       .catch(response => {
         expect(response.status).toEqual(500);
       });
