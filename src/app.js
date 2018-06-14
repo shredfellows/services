@@ -8,11 +8,13 @@ import cors from 'cors';
 // Custom Libraries
 import router from './api/api.js';
 import assgnRouter from './api/assignmentRouter.js';
+import gitHubRouter from './api/githubRouter.js';
 
 // Custom Middleware
 import errorHandler from './middleware/error.js';
 import notFound from './middleware/404.js';
 import authRouter from './auth/router.js';
+
 
 let app = express();
 
@@ -23,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 // Our API Routes
+app.use(gitHubRouter);
 app.use(assgnRouter);
 app.use(router);
 app.use(authRouter);

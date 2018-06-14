@@ -9,20 +9,22 @@ const localHostURL = 'http://localhost:3000/api/v1/github/';
 
 github.find = () => {
   return superagent.get(baseURL)
-  .set({'Authorization': 'Bearer ' + '21c8bc3330e6393814e4b68321c8b5a9b6566d1a'})
-  .then(res => {   
-    return parseContents(res.body, baseURL);
-  });
+    .set({'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN})
+    .then(res => {   
+      return parseContents(res.body, baseURL);
+    });
 };
 
 // TODO:
 github.findOne = (req) => {
-  console.log(baseURL + req._id.split(/[ .]+/).join('/'));
-  return superagent.get(baseURL + req._id.split(/[ .]+/).join('/'))
-  .set({'Authorization': 'Bearer ' + '21c8bc3330e6393814e4b68321c8b5a9b6566d1a'})
-  .then(res => {    
-    return res.body;
-  });
+  
+  console.log(baseURL + req.split(/[ .]+/).join('/'));
+  return superagent.get(baseURL + req.split(/[ .]+/).join('/'))
+    .set({'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN})
+    .then(res => {    
+    
+      return res.body;
+    }).catch(console.error);
 };
 
 
@@ -50,22 +52,22 @@ function parseContents(data, url) {
 
     return contents;
   });
-};
+}
 
 function getSubDirectories(key, directory) {
   return superagent.get(directory)
-  .set({'Authorization': 'Bearer ' + '21c8bc3330e6393814e4b68321c8b5a9b6566d1a'})
-  .then(res => {  
-    var obj = {};
-    for (var i = 0; i < res.body.length; i++) {
-      if (res.body[i].type === 'dir') {
-        obj[res.body[i].name] = `${localHostURL}${res.body[i].path.replace('/', '.')}`;
+    .set({'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN})
+    .then(res => {  
+      var obj = {};
+      for (var i = 0; i < res.body.length; i++) {
+        if (res.body[i].type === 'dir') {
+          obj[res.body[i].name] = `${localHostURL}${res.body[i].path.replace('/', '.')}`;
+        }
       }
-    }
-    var parentObj = {[key] : obj};
-    return parentObj;
-  });
-};
+      var parentObj = {[key] : obj};
+      return parentObj;
+    });
+}
 
 
 export default github;
