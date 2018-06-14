@@ -38,10 +38,12 @@ ___
 
 At this point we have basic routes scaffolded; models for user, profile, and assignments; Due to not having admin privileges on Canvas, we are currently using Google Oauth for authentication/authorization of student users. 
 
+___
 <a id="configuration"></a>
 ## Configuration
 Maybe write stuff here for what needs to be done to get set up for development testing in local environment.
 
+___
 <a id="routes"></a>
 ## Routes
 
