@@ -7,20 +7,22 @@ import nel from 'nel';
 
 import Assignment from '../models/assignment.js';
 // import User from '../models/user.js';
-
+import auth from '../auth/middleware.js';
 const router = express.Router();
 
-router.post('/api/v1/assignment', (req,res,next) => {
+router.post('/api/v1/assignment', auth, (req,res,next) => {
+  console.log(`I'm here`);
   let asgn = new Assignment(req.body);
+  console.log(asgn);
   asgn.save()
     .then(data => sendJSON(res,data))
     .catch(next);
 });
 
 //Post the student's notes for a specfic assignment
-router.put('/api/v1/assignment/:assignmentid', (req, res, next) => {
+router.put('/api/v1/assignment/note/:assignmentid', auth, (req, res, next) => {
   console.log(req.params.assignmentid);
-  Assignment.findOneAndUpdate({_id:req.params.assignmentid},{notes:req.body.notes})
+  Assignment.findOneAndUpdate({assignmentId:req.params.assignmentid},{notes:req.body.notes})
     .then(data => sendJSON(res, data))
     .catch(next);
 });
@@ -28,16 +30,18 @@ router.put('/api/v1/assignment/:assignmentid', (req, res, next) => {
 //Post the student's code for a specfic assignment
 router.put('/api/v1/assignment/code/:assignmentid', (req, res, next) => {
   // Route with single responsibility to test code
-
+  
   let session = new nel.Session();
-
+  
   const solution = {};
+  
   let onStdoutArray = [];
   let onStderrArray = [];
 
-  let code = req.body.code.trim();
+  let code = req.body.code.challenge.trim();
+  
   solution.input = code;
-
+ 
   session.execute(code, {
     onSuccess: (output) => {
       solution.return = output.mime['text/plain'];
@@ -54,8 +58,9 @@ router.put('/api/v1/assignment/code/:assignmentid', (req, res, next) => {
       solution['console.error'] = onStderrArray;
     },
     afterRun: () => {
-      Assignment.findOneAndUpdate({ _id: req.params.assignmentid }, { code: { challenge: req.body.code.challenge } })
-        .then(data => sendJSON(res, data))
+      
+      Assignment.findOneAndUpdate({assignmentId: req.params.assignmentid }, { code:  req.body.code } )
+        .then(() => sendJSON(res, solution))
         .catch(next);
     },
   });

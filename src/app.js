@@ -27,8 +27,9 @@ app.use(express.urlencoded({extended:true}));
 // Our API Routes
 app.use(gitHubRouter);
 app.use(assgnRouter);
-app.use(router);
 app.use(authRouter);
+app.use(router);
+
 
 // Errors and 404's
 app.use(notFound);

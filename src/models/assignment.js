@@ -8,9 +8,7 @@ const assignmentSchema = mongoose.Schema({
   assignmentId: {type:Number},
   profileId: {type: mongoose.Schema.Types.ObjectId, ref:'profiles'},
   notes: {type: String},
-  code: {
-    challenge: { type:String },
-  },
+  code: { any: Schema.Types.Mixed },
 });
 
 assignmentSchema.pre('findOne', function(next) {
