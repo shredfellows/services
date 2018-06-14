@@ -2,7 +2,11 @@
 
 import express from 'express';
 const router = express.Router();
+
+import superagent from 'superagent';
+
 import auth from '../auth/middleware.js';
+
 
 // Dynamic Models
 // This will use a model matching /:model/ in all routes that have a model parameter
