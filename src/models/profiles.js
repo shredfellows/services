@@ -11,7 +11,7 @@ const profileSchema = new mongoose.Schema({
   // name: { type: String, required: true},
   username: { type: mongoose.Schema.Types.String, ref: 'users'},
   email: { type: String, required: true, unique: true },
-  assignments: [{type:mongoose.Schema.Types.ObjectId, ref: 'assignments'}],
+  assignments: [{type:mongoose.Schema.Types.ObjectId, ref: 'assignment'}],
 });
 
 profileSchema.pre('findOne', function (next) {
