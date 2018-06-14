@@ -8,13 +8,13 @@ const assignmentSchema = mongoose.Schema({
   assignmentId: {type:Number},
   profileId: {type: mongoose.Schema.Types.ObjectId, ref:'profiles'},
   notes: {type: String},
-  code: { any: Schema.Types.Mixed },
+  code: {type: Object},
 });
 
-assignmentSchema.pre('findOne', function(next) {
-  this.populate('profileId');
-  next();
-});
+// assignmentSchema.pre('findOne', function(next) {
+//   this.populate('profileId');
+//   next();
+// });
 
 assignmentSchema.pre('save', function (next) {
   let profileId = this.profileId;

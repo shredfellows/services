@@ -6,14 +6,15 @@ import express from 'express';
 import nel from 'nel';
 
 import Assignment from '../models/assignment.js';
-// import User from '../models/user.js';
+
 import auth from '../auth/middleware.js';
 const router = express.Router();
 
 router.post('/api/v1/assignment', auth, (req,res,next) => {
-  console.log(`I'm here`);
+  
   let asgn = new Assignment(req.body);
-  console.log(asgn);
+  asgn.code = req.body.code;
+  
   asgn.save()
     .then(data => sendJSON(res,data))
     .catch(next);
@@ -21,14 +22,14 @@ router.post('/api/v1/assignment', auth, (req,res,next) => {
 
 //Post the student's notes for a specfic assignment
 router.put('/api/v1/assignment/note/:assignmentid', auth, (req, res, next) => {
-  console.log(req.params.assignmentid);
-  Assignment.findOneAndUpdate({assignmentId:req.params.assignmentid},{notes:req.body.notes})
+  
+  Assignment.findOneAndUpdate({_id:req.params.assignmentid},{notes:req.body.notes})
     .then(data => sendJSON(res, data))
     .catch(next);
 });
 
 //Post the student's code for a specfic assignment
-router.put('/api/v1/assignment/code/:assignmentid', (req, res, next) => {
+router.put('/api/v1/assignment/code/:assignmentid/:challengeName', auth, (req, res, next) => {
   // Route with single responsibility to test code
   
   let session = new nel.Session();
@@ -38,7 +39,9 @@ router.put('/api/v1/assignment/code/:assignmentid', (req, res, next) => {
   let onStdoutArray = [];
   let onStderrArray = [];
 
-  let code = req.body.code.challenge.trim();
+  let challenge = req.params.challengeName;
+
+  let code = req.body.code[challenge].trim();
   
   solution.input = code;
  
@@ -59,7 +62,7 @@ router.put('/api/v1/assignment/code/:assignmentid', (req, res, next) => {
     },
     afterRun: () => {
       
-      Assignment.findOneAndUpdate({assignmentId: req.params.assignmentid }, { code:  req.body.code } )
+      Assignment.findOneAndUpdate({_id: req.params.assignmentid }, { code: req.body.code } )
         .then(() => sendJSON(res, solution))
         .catch(next);
     },
@@ -67,8 +70,9 @@ router.put('/api/v1/assignment/code/:assignmentid', (req, res, next) => {
 });
 
 //Get a specific assignment by student ID and assignment ID
-router.get('/api/v1/model/assignment/:courseid/:studentid/:assignmentid', (req, res, next) => {
-  Assignment.find({})
+router.get('/api/v1/model/assignment/:assignmentid', auth, (req, res, next) => {
+  
+  Assignment.find({_id: req.params.assignmentid})
     .then(data => sendJSON(res, data))
     .catch(next);
 });
