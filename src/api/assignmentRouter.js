@@ -69,6 +69,40 @@ router.put('/api/v1/assignment/code/:assignmentid/:challengeName', auth, (req, r
   });
 });
 
+router.post('api/v1/code', (req, res, next) => {
+  let session = new nel.Session();
+  
+  const solution = {};
+  
+  let onStdoutArray = [];
+  let onStderrArray = [];
+
+  let code = req.body.code;
+  
+  solution.input = code;
+ 
+  session.execute(code, {
+    onSuccess: (output) => {
+      solution.return = output.mime['text/plain'];
+    },
+    onError: (output) => {
+      solution.error = output.error;
+    },
+    onStdout: (output) => {
+      onStdoutArray.push(output);
+      solution['console.log'] = onStdoutArray;
+    },
+    onStderr: (output) => {
+      onStderrArray.push(output);
+      solution['console.error'] = onStderrArray;
+    },
+    afterRun: () => {
+      sendJSON(res, solution);
+    },
+  });
+});
+
+
 //Get a specific assignment by student ID and assignment ID
 router.get('/api/v1/model/assignment/:assignmentid', auth, (req, res, next) => {
   
