@@ -26,9 +26,9 @@ authRouter.get('/login', auth, (req, res, next) => {
 
 authRouter.get('/oauth', (req, res, next) => {
 
-  console.log(req.query.state);  
-  let assignmentName = req.query.state;
-  let URL = process.env.API_URL + `/api/v1/github/${assignmentName}`;
+  // console.log(req.query.state);  
+  // let assignmentName = req.query.state;
+  // let URL = process.env.API_URL + `/api/v1/github/${assignmentName}`;
   //let URL = process.env.API_URL + `/api/v1/profiles`;
 
 

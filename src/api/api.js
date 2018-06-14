@@ -23,14 +23,14 @@ router.get('/api/v1/:model', auth, (req,res,next) => {
 });
 
 router.get('/api/v1/:model/:id', auth, (req,res,next) => {
-
+  console.log('did we make it here!!!!');
   let user = req.user;
   console.log(user);
   req.model.findOne({_id:req.params.id})
     .then( data => sendJSON(res,data) )
     .catch( next );
 
-    //Getting this back from Ovi. How to pass to the 4 quadrant main page? As params?
+  //Getting this back from Ovi. How to pass to the 4 quadrant main page? As params?
 
   //   let data = `{
   //     “name”: “Find”,

@@ -6,6 +6,28 @@ import Assignment from '../models/assignment.js';
 
 const router = express.Router();
 
+router.post('/api/v1/assignment', (req,res,next) => {
+  let asgn = new Assignment(req.body);
+  asgn.save()
+    .then(data => sendJSON(res,data))
+    .catch(next);
+});
+
+//Post the student's notes for a specfic assignment
+router.put('/api/v1/assignment/:assignmentid', (req, res, next) => {
+  console.log(req.params.assignmentid);
+  Assignment.findOneAndUpdate({_id:req.params.assignmentid},{notes:req.body.notes})
+    .then(data => sendJSON(res, data))
+    .catch(next);
+});
+
+//Post the student's code for a specfic assignment
+router.put('/api/v1/assignment/code/:assignmentid', (req, res, next) => {
+  console.log();
+  Assignment.findOneAndUpdate({_id:req.params.assignmentid},{code :{challenge:req.body.code.challenge}})
+    .then(data => sendJSON(res, data))
+    .catch(next);
+});
 
 //Get a specific assignment by student ID and assignment ID
 router.get('/api/v1/model/assignment/:courseid/:studentid/:assignmentid', (req, res, next) => {
@@ -14,20 +36,6 @@ router.get('/api/v1/model/assignment/:courseid/:studentid/:assignmentid', (req, 
     .catch(next);
 });
 
-//Post the student's notes for a specfic assignment
-router.post('/api/v1/model/assignment/:courseid/:studentid/:assignmentid', (req, res, next) => {
-  let note = new req.model(req.body); //eslint-disable-line
-  note.save()
-    .then(data => sendJSON(res, data))
-    .catch(next);
-});
-
-//Update the existing notes on an assignment
-router.put('/api/v1/model/assignment/:courseid/:studentid/:assignmentid', (req, res, next) => {
-  req.model.update(req.params.notes)
-    .then(data => sendJSON(res, data))
-    .catch(next);
-});
 
 let sendJSON = (res, data) => {
   res.statusCode = 200;

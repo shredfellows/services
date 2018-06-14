@@ -14,18 +14,18 @@ const assignmentSchema = mongoose.Schema({
 });
 
 assignmentSchema.pre('findOne', function(next) {
-  this.populate('userId');
+  this.populate('profileId');
   next();
 });
 
 assignmentSchema.pre('save', function (next) {
-  let profileId = this.userId;
+  let profileId = this.profileId;
   let assId = this._id;
 
   Profile.findById(profileId)
     .then(user => {
       if (!user) {
-        return Promise.reject('Invalid Team Specified');
+        return Promise.reject('Invalid assignment');
       } else {
         Profile.findOneAndUpdate(
           { _id: profileId },
