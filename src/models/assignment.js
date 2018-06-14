@@ -1,16 +1,42 @@
 'use strict';
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import Profile from './profiles.js';
 
 const assignmentSchema = mongoose.Schema({
-  coursesId: [  course: [ {type:mongoose.Schema.Types.ObjectId, ref:'course'}],
-  courseId:(type:Number, require:true),
-  assignmentID:(type:Number),
+  courseId: {type: String},
+  assignmentId: {type:Number},
+  profileId: {type: mongoose.Schema.Types.ObjectId, ref:'profiles'},
+  notes: {type: String},
+  code: {
+    challenge: { type:String },
+  },
 });
 
-courseSchema.pre('findCourse', function(next) {
-  this.populate('course');
+assignmentSchema.pre('findOne', function(next) {
+  this.populate('profileId');
   next();
+});
+
+assignmentSchema.pre('save', function (next) {
+  let profileId = this.profileId;
+  let assId = this._id;
+
+  Profile.findById(profileId)
+    .then(user => {
+      if (!user) {
+        return Promise.reject('Invalid assignment');
+      } else {
+        Profile.findOneAndUpdate(
+          { _id: profileId },
+          { $addToSet: { assignments: assId} }
+        )
+          .then(Promise.resolve())
+          .catch(err => Promise.reject(err));
+      }
+    })
+    .then(next())
+    .catch(next);
 });
 
 export default mongoose.model('assignment', assignmentSchema);

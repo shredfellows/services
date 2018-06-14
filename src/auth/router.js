@@ -18,29 +18,30 @@ authRouter.post('/signup', (req, res, next) => {
     .catch(next);
 });
 
-authRouter.get('/login',auth, (req, res, next) => {
+authRouter.get('/login', auth, (req, res, next) => {
+  console.log(req.user);
   res.cookie('Token', req.token);
-  res.send(req.token);
+  res.send(req.user);
 });
 
 authRouter.get('/oauth', (req, res, next) => {
 
-  let URL = process.env.CLIENT_URL;
+  // console.log(req.query.state);  
+  // let assignmentName = req.query.state;
+  // let URL = process.env.API_URL + `/api/v1/github/${assignmentName}`;
+  //let URL = process.env.API_URL + `/api/v1/profiles`;
+
 
   // Offload the oauth handshaking process to a module designed
   // to do that job. The route itself shouldn't contain any logic...
   oauth.authorize(req)
     .then ( token => {
+      console.log('Token is: ', token);
       res.cookie('Token', token);
-      res.redirect(URL);
+      res.redirect(process.env.CLIENT_URL);
     })
     .catch(next);
 });
 
-// A little proof of life here, to show how we can protect any
-// route with our auth middleware
-authRouter.get('/showMeTheMoney', auth, (req,res,next) => {
-  res.send('Here is all the ca$h');
-});
 
 export default authRouter;

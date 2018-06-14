@@ -7,6 +7,7 @@ import cors from 'cors';
 
 // Custom Libraries
 import router from './api/api.js';
+import assgnRouter from './api/assignmentRouter.js';
 
 // Custom Middleware
 import errorHandler from './middleware/error.js';
@@ -19,8 +20,10 @@ let app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 // Our API Routes
+app.use(assgnRouter);
 app.use(router);
 app.use(authRouter);
 
