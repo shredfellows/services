@@ -30,7 +30,7 @@ router.get('/api/v1/:model/:id', auth, (req,res,next) => {
     .then( data => sendJSON(res,data) )
     .catch( next );
 
-    //Getting this back from Ovi. How to pass to the 4 quadrant main page? As params?
+//Getting this back from Ovi. How to pass to the 4 quadrant main page? As params?
 
   //   let data = `{
   //     “name”: “Find”,
@@ -71,10 +71,10 @@ router.post('/api/v1/:model/:id/:studentId', (req, res, next) => {
   if(!req.body.codeContent || !req.body.comments) {
     return next('title or sample was not provided');
   }
-    let record = new req.model(req.body);
-    record.save()
-      .then( data => sendJSON(res,data) )
-      .catch( next );
+  let record = new req.model(req.body);
+  record.save()
+    .then( data => sendJSON(res,data) )
+    .catch( next );
   
   res.sendStatus(418);
 });

@@ -13,13 +13,14 @@ describe('Model Finder Middleware', () => {
       modelFinder(req,res,next);
     }).toThrow();
   });
-  it('returns a model object/function when a valid model is requested', () => {
+
+  it('returns undefined model when a model does not exist', () => {
     let req = {params:{model:'john'}};
     let res = {};
     let next = () => {};
-    expect( () => {
-      modelFinder(req,res,next);
-    }).toThrow('Model john Not Found');
+    modelFinder(req,res,next);
+    expect(req.model).toBeUndefined();
+   
   });
 
   it('returns a model object/function when a valid model is requested', () => {
