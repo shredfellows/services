@@ -8,8 +8,8 @@
     "dboff": "killall mongod",
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "test-watch": "jest --watchAll",
-    "test": "jest",
+    "test-watch": "jest --coverage --verbose --watchAll",
+    "test": "jest --coverage --verbose",
     "lint": "eslint **/*.js"
   },
   "keywords": [],
