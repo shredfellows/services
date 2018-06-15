@@ -266,7 +266,7 @@ ___
 
 ## Authors
 
-Khalil Ahmned, Jen Bach, Jason Burns, Timea Heidenreich, Ben Hurst, Justin Morris, Ovin Parasca, Michael Sklepowich
+Khalil Ahmned, Jen Bach, Jason Burns, Timea Heidenreich, Ben Hurst, Justin Morris, Ovi Parasca, Michael Sklepowich
 
 ## Credits
 
