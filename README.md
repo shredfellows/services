@@ -45,7 +45,7 @@ The problem being solved is that resources required for schoolwork are wide spre
 The solution is to bring all those resources to one place.
 
 <a id="configuration"></a>
-## Tech/Framework Used
+## Configuration, Tech/Framework Used
 
 * written in JavaScript ES6
 * babel-env
@@ -141,6 +141,103 @@ ___
     code: {
 	    challenge: { type:String },
 		 }
+## Assignment Routes
+
+### Post: post assignment '/api/v1/assignment'
+
+- Posts an assignment to the user profile
+
+ * Input
+
+```
+{
+       "courseId": "12315",
+       "assignmentId": 1231234,
+       "profileId": "5b22df96cea1b400146cf65c",
+       "notes": "I think this is medium.",
+       "code": {"challenge1": "console.log('Challenge1')",
+                "challenge2": "console.log('challenge2"}
+}
+```
+
+* Output
+
+```
+{
+    "_id": "5b23f4219546980014d3e39e",
+    "courseId": "12315",
+    "assignmentId": 1231234,
+    "profileId": "5b22df96cea1b400146cf65c",
+    "notes": "I think this is medium.",
+    "code": {
+        "challenge1": "console.log('Challenge1')",
+        "challenge2": "console.log('challenge2"
+    },
+    "__v": 0
+}
+```
+
+### Put: update note '/api/v1/assignment/note/:assignmentid'
+
+- Updates assignment note by the user
+
+* Input
+
+```
+{
+      "courseId": "12315",
+      "assignmentId": 6685863,
+      "profileId": "5b22df96cea1b400146cf65c",
+      > "notes": "I think this is super easy.",
+      "code": {"challenge1": "let x = 2; console.log(x + x);" }
+}
+```
+
+* Output
+
+```
+{
+	"_id": "5b23f4219546980014d3e39e",
+	"courseId": "12315",
+	"assignmentId": 6685863,
+	"profileId": "5b22df96cea1b400146cf65c",
+	> "notes": "I think this is super easy.",
+	"code": {"challenge1": "let x = 2; console.log(x + x);" }
+}
+```
+
+### Put: update code '/api/v1/assignment/code/:assignmentid'
+
+- Updates assignment code by the user
+
+* Input
+
+```
+
+```
+
+* Output
+
+```
+
+```
+
+### Get: get assignment '/api/v1/model/assignment/:courseid/:studentid/:assignmentid'
+
+- Gets a specific assignment by student ID and assignment ID
+
+
+* Input
+
+```
+
+```
+
+* Output
+
+```
+
+```
 ___
    
  ## User Stories  (*Do we need this section? Which ones to include?*)
@@ -163,8 +260,16 @@ ___
 ___
 
 <a id="futher-work"></a>
-## Further Work
+## TODO
 
-- Is it possible to get site admin privileges (paid service) for Canvas so we can obtain APP_ID and APP_SECRET configuration variables.
-- Need to get with John to understand how to best use Canvas API to streamline assignment generation from instructor's perspective.
+- create front end
+- increase test coverage
+
+## Authors
+
+Khalil Ahmned, Jen Bach, Jason Burns, Timea Heidenreich, Ben Hurst, Justin Morris, Ovin Parasca, Michael Sklepowich
+
+## Credits
+
+To John Cokos and Catherine Looper for the research, help and guidance
 
