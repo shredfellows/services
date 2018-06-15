@@ -38,13 +38,30 @@ ___
 <a id="overview"></a>
 ## Overview
 
-At this point we have basic routes scaffolded; models for user, profile, and assignments; Due to not having admin privileges on Canvas, we are currently using Google Oauth for authentication/authorization of student users. 
+This app uses authentication by oAuth,
+This app draws from Canvas, and Githunb API's,
+This app is made to streamline the workflow for students and teachers of CodeFellows.
+The problem being solved is that resources required for schoolwork are wide spread.
+The solution is to bring all those resources to one place.
 
-___
 <a id="configuration"></a>
-## Configuration
-Maybe write stuff here for what needs to be done to get set up for development testing in local environment.
+## Tech/Framework Used
 
+* babel-env
+* babel-eslint
+* babel-register
+* bcrypt
+* cors
+* dotenv
+* eslint
+* express
+* jest
+* jsonwebtoken
+* mongoose
+* morgan
+* nel
+* require-dir
+* superagent
 ___
 <a id="routes"></a>
 ## Routes
