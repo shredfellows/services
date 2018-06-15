@@ -2,7 +2,7 @@
 
 import express from 'express';
 const router = express.Router();
-import auth from '../auth/middleware.js';
+// import auth from '../auth/middleware.js';
 import Github from '../models/github.js';
 
 //Get One

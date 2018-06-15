@@ -33,7 +33,7 @@ userSchema.statics.createFromOAuth = function(incoming) {
       console.log('Welcome Back', user.username);
       return user;
     })
-    .catch( error => {
+    .catch( error => { // eslint-disable-line
       let username = incoming.email;
       let password = 'none';
       return this.create({
