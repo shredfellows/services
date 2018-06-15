@@ -149,7 +149,7 @@ ___
 
  * Input
 
-```
+```JavaScript
 {
        "courseId": "12315",
        "assignmentId": 1231234,
@@ -162,7 +162,7 @@ ___
 
 * Output
 
-```
+```JavaScript
 {
     "_id": "5b23f4219546980014d3e39e",
     "courseId": "12315",
@@ -183,7 +183,7 @@ ___
 
 * Input
 
-```
+```JavaScript
 {
       "courseId": "12315",
       "assignmentId": 6685863,
@@ -197,50 +197,53 @@ ___
 
 ```JavaScript
 {
-	"_id": "5b23f4219546980014d3e39e",
-	"courseId": "12315",
-	"assignmentId": 6685863,
-	"profileId": "5b22df96cea1b400146cf65c",
-	"notes": "I think this is super easy.",
-	"code": {"challenge1": "let x = 2; console.log(x + x);" }
+    "_id": "5b22e211cea1b400146cf65e",
+    "courseId": "12315",
+    "assignmentId": 1231234,
+    "profileId": "5b22df96cea1b400146cf65c",
+    "notes": "I think this is super easy.",
+    "code": {
+        "challenge1": "jehvbkjhadvbakjshdvaksjdhbcadskjhbcaskjd",
+        "challenge3": "I'm"
+    },
+    "__v": 0
 }
 ```
 
-### Put: update code '/api/v1/assignment/code/:assignmentid'
+### Put: update code '/api/v1/assignment/code/:assignmentid/challengename'
 
 - Updates assignment code by the user
 
 * Input
 
-```
-
-```
-
-* Output
-
-```
-
-```
-
-### Get: get assignment '/api/v1/model/assignment/:courseid/:studentid/:assignmentid'
-
-- Gets a specific assignment by student ID and assignment ID
-
-
-* Input
-
-```
-
+```JavaScript
+{
+      "courseId": "12315",
+      "assignmentId": 6685863,
+      "profileId": "5b22df96cea1b400146cf65c",
+      "notes": "I think this is super easy.",
+      "code": {"challenge1": "let x = 2; console.log(x + x);" ,
+      	"arraysplit": "let x = 4; console.log(x + x);"
+      }
+}
 ```
 
 * Output
 
-```
+```JavaScript
+{
+    "input": "let x = 4; console.log(x + x);",
+    "console.log": [
+        "8\n"
+    ],
+    "return": "undefined"
+}
 
 ```
+
 ___
    
- ## User Stories  (*Do we need this section? Which ones to include?*)
+ ## User Stories 
  > ***1. As a user, I want a link on each Canvas assignment that re-directs me to the corresponding ShredFellows page.***
 
  - This link needs to pass to ShredFellows the course & assignment IDs.
