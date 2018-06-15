@@ -188,20 +188,20 @@ ___
       "courseId": "12315",
       "assignmentId": 6685863,
       "profileId": "5b22df96cea1b400146cf65c",
-      > "notes": "I think this is super easy.",
+      "notes": "I think this is super easy.",
       "code": {"challenge1": "let x = 2; console.log(x + x);" }
 }
 ```
 
 * Output
 
-```
+```JavaScript
 {
 	"_id": "5b23f4219546980014d3e39e",
 	"courseId": "12315",
 	"assignmentId": 6685863,
 	"profileId": "5b22df96cea1b400146cf65c",
-	> "notes": "I think this is super easy.",
+	"notes": "I think this is super easy.",
 	"code": {"challenge1": "let x = 2; console.log(x + x);" }
 }
 ```
