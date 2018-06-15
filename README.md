@@ -186,7 +186,7 @@ ___
 ```JavaScript
 {
       "courseId": "12315",
-      "assignmentId": 6685863,
+      "assignmentId": 1231234,
       "profileId": "5b22df96cea1b400146cf65c",
       "notes": "I think this is super easy.",
       "code": {"challenge1": "let x = 2; console.log(x + x);" }
@@ -197,16 +197,12 @@ ___
 
 ```JavaScript
 {
-    "_id": "5b22e211cea1b400146cf65e",
-    "courseId": "12315",
-    "assignmentId": 1231234,
-    "profileId": "5b22df96cea1b400146cf65c",
-    "notes": "I think this is super easy.",
-    "code": {
-        "challenge1": "jehvbkjhadvbakjshdvaksjdhbcadskjhbcaskjd",
-        "challenge3": "I'm"
-    },
-    "__v": 0
+	"_id": "5b22e211cea1b400146cf65e",
+	"courseId": "12315",
+	"assignmentId": 1231234,
+	"profileId": "5b22df96cea1b400146cf65c",
+	"notes": "I think this is super easy.",
+	"code": {"challenge1": "let x = 2; console.log(x + x);" }
 }
 ```
 
