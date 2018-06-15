@@ -47,6 +47,7 @@ The solution is to bring all those resources to one place.
 <a id="configuration"></a>
 ## Tech/Framework Used
 
+* written in JavaScript ES6
 * babel-env
 * babel-eslint
 * babel-register
