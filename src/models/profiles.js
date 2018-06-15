@@ -5,10 +5,8 @@ import jwt from 'jsonwebtoken';
 
 import Users from '../auth/model.js';
 
-//What do we need in here. Specifically, would should we grab from user model.
 const profileSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
-  // name: { type: String, required: true},
   username: { type: mongoose.Schema.Types.String, ref: 'users'},
   email: { type: String, required: true, unique: true },
   assignments: [{type:mongoose.Schema.Types.ObjectId, ref: 'assignment'}],
@@ -33,7 +31,6 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     .catch(error => {
       return this.create({
         userId: incoming._id,
-        // name: incoming.name,
         username: incoming.username,
         email: incoming.email,
       });

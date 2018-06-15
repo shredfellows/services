@@ -3,7 +3,7 @@
 import express from 'express';
 const router = express.Router();
 import auth from '../auth/middleware.js';
-import Github from '../models/github.js'
+import Github from '../models/github.js';
 
 //Get One
 router.get('/api/v1/github/:assignmentName', (req, res, next) => {
@@ -11,13 +11,12 @@ router.get('/api/v1/github/:assignmentName', (req, res, next) => {
   
   Github.findOne(assName)
     .then(data => {
-      
       sendJSON(res, data);
     }).catch(next);
 
 });
 
-//Get All?
+//Get All
 router.get('/api/v1/github', (req, res, next) => {
   Github.find()
     .then(data => {

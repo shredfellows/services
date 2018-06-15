@@ -16,8 +16,8 @@ describe('API', () => {
 
   it.only('gets a 200 response on a good model', () => {
     return superagent.get('http://localhost:3000/api/v1/bar')
+      .auth('john', 'foobar')
       .then(response => {
-        console.log('inside the then');
         expect(response.statusCode).toEqual(200);
       })
       .catch(console.err);
