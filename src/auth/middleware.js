@@ -21,7 +21,6 @@ export default (req, res, next) => {
         if (!user) { getAuth(); }
         else {
           req.token = user.generateToken();
-          console.log('TOKEN:', req.token);
           next();
         }
       })
