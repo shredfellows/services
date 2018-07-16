@@ -1,11 +1,11 @@
 'use strict';
 
 import express from 'express';
-const router = express.Router();
-import auth from '../auth/middleware.js';
 
-// Dynamic Models
+import auth from '../auth/middleware.js';
 import modelFinder from '../middleware/models.js';
+
+const router = express.Router();
 router.param('model', modelFinder);
 
 router.get('/api/v1/:model', auth, (req,res,next) => {

@@ -1,9 +1,10 @@
 'use strict';
 
 import express from 'express';
+
+import Github from './githubAPI.js';
+
 const router = express.Router();
-// import auth from '../auth/middleware.js';
-import Github from '../models/github.js';
 
 //Get One
 router.get('/api/v1/github/:assignmentName', (req, res, next) => {

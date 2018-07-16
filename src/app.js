@@ -6,9 +6,10 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 // Custom Libraries
-import router from './api/api.js';
-import assgnRouter from './api/assignmentRouter.js';
-import gitHubRouter from './api/githubRouter.js';
+import genericRouter from './api/api.js';
+import codeRouter from './code-runner/routes.js';
+import assgnRouter from './assignment/routes.js';
+import gitHubRouter from './github/routes.js';
 
 // Custom Middleware
 import errorHandler from './middleware/error.js';
@@ -27,8 +28,9 @@ app.use(express.urlencoded({extended:true}));
 // Our API Routes
 app.use(gitHubRouter);
 app.use(assgnRouter);
+app.use(codeRouter);
 app.use(authRouter);
-app.use(router);
+app.use(genericRouter);
 
 
 // Errors and 404's

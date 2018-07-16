@@ -3,7 +3,6 @@
 import superagent from 'superagent';
 const github = {};
 
-
 github.find = () => {
   return superagent.get(process.env.GITHUB_ASSIGNMENTS_URL)
     .set({
@@ -101,7 +100,6 @@ function parseFolder(data, url) {
   });
 
 }
-
 
 function parseFile(fileURL) {
   return superagent.get(fileURL)
