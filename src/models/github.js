@@ -7,7 +7,7 @@ const github = {};
 github.find = () => {
   return superagent.get(process.env.GITHUB_ASSIGNMENTS_URL)
     .set({
-      'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN
+      'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN,
     })
     .then(res => {
       return parseContents(res.body, process.env.GITHUB_ASSIGNMENTS_URL);
@@ -17,17 +17,12 @@ github.find = () => {
 github.findOne = (req) => {
   return superagent.get(process.env.GITHUB_ASSIGNMENTS_URL + req.split(/[ .]+/).join('/'))
     .set({
-      'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN
+      'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN,
     })
     .then(res => {
-      // return res.body;
       return parseFolder(res.body, process.env.GITHUB_ASSIGNMENTS_URL + req.split(/[.]+/).join('/'));
     }).catch(console.error);
 };
-
-
-
-// Helper functions
 
 function parseContents(data, url) {
   const promises = [];
@@ -53,7 +48,7 @@ function parseContents(data, url) {
 function getSubDirectories(key, directory) {
   return superagent.get(directory)
     .set({
-      'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN
+      'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN,
     })
     .then(res => {
       var obj = {};
@@ -63,7 +58,7 @@ function getSubDirectories(key, directory) {
         }
       }
       var parentObj = {
-        [key]: obj
+        [key]: obj,
       };
       return parentObj;
     });
@@ -105,30 +100,28 @@ function parseFolder(data, url) {
     return contents;
   });
 
-};
+}
 
 
 function parseFile(fileURL) {
   return superagent.get(fileURL)
     .then(res => {
       return JSON.parse(res.text);
-  });
-};
+    });
+}
 
 function getChallenges(url) {
   return superagent.get(url)
-  .set({
-    'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN
-  })
-  .then(res => {
-    var content = {};
-    for (var i = 0; i < res.body.length; i++) {
-      content[res.body[i].name.split('.')[0]] = res.body[i].download_url;
-    }
-    return content;
-  });
-};
-
-
+    .set({
+      'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN,
+    })
+    .then(res => {
+      var content = {};
+      for (var i = 0; i < res.body.length; i++) {
+        content[res.body[i].name.split('.')[0]] = res.body[i].download_url;
+      }
+      return content;
+    });
+}
 
 export default github;
