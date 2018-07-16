@@ -2,8 +2,15 @@
 
 import User from './model.js';
 
-export default (req, res, next) => {
+/** A module that checks the authorization headers and authenticates or authorizes the user
+ * @module auth/middleware
+ */
 
+export default (req, res, next) => {
+/**
+ * The authorize function uses the member function authorize() on the user model
+ * @param {string} token - The token that is sent as a cookie and then set bearer token.
+ */
   let authorize = (token) => {
     User.authorize(token)
       .then(user => {
@@ -14,7 +21,12 @@ export default (req, res, next) => {
       })
       .catch(next);
   };
-
+  /**
+ * This authenticate() function uses the member function authenticate on the user model
+ * @param {object} auth - contains the username and password input
+ * @param {string} auth.username - the username
+ * @param {string} auth.password - the password of user
+ */
   let authenticate = (auth) => {
     User.authenticate(auth)
       .then(user => {

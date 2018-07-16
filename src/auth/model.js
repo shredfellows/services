@@ -4,6 +4,13 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+/**
+ * Create a `mongoose.Schema` instance 
+ * @param {String} username
+ * @param {String} password
+ * @param {String} email 
+ */
+
 const userSchema = new mongoose.Schema({
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
@@ -44,14 +51,25 @@ userSchema.statics.createFromOAuth = function(incoming) {
     });
 
 };
-
+/**
+ * Finds the user and verifies that the password given matches the password in the database
+ * @method authenticate
+ * @param {object} auth
+ * @param {String} auth.username - the username 
+ * @param {String} auth.password - the password
+ */
 userSchema.statics.authenticate = function(auth) {
   let query = {username:auth.username};
   return this.findOne(query)
     .then(user => user && user.comparePassword(auth.password))
     .catch(error => error);
 };
-
+/**
+ * verifies that the token given matches a particular user
+ * @method authorize
+ * @param {String} token - a jwt token that contains user_id
+ 
+ */
 userSchema.statics.authorize = function(token) {
   let parsedToken = jwt.verify(token, process.env.SECRET || 'changeit');
   let query = {_id:parsedToken.id};
@@ -62,10 +80,18 @@ userSchema.statics.authorize = function(token) {
     .catch(error => {error;});
 };
 
+/** Compare the password given with the password in the database attached to the user
+ * @method comparePassword
+ * @param {String} - the password to compare
+ */
 userSchema.methods.comparePassword = function(password) {
   return bcrypt.compare(password, this.password)
     .then(valid => valid ? this : null);
 };
+
+/** Generates a jwt token that contains the user_id
+ * @method generateToken
+ */
 
 userSchema.methods.generateToken = function() {
   return jwt.sign( {id:this._id}, process.env.SECRET || 'changeit' );

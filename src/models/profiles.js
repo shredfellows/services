@@ -4,6 +4,10 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
 import Users from '../auth/model.js';
+/**
+ * Create a `mongoose.Schema` instance 
+ * @param {string} email
+ */
 
 const profileSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},

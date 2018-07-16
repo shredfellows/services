@@ -3,6 +3,15 @@
 import mongoose from 'mongoose';
 import Profile from './profiles.js';
 
+/**
+ * Create a `mongoose.Schema` instance.
+ * @param {string} courseId 
+ * @param {Number} assignmentId
+ * @param {string} notes 
+ * @param {Object} code
+ * 
+ */
+
 const assignmentSchema = mongoose.Schema({
   courseId: {type: String},
   assignmentId: {type:Number},
