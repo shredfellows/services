@@ -1,5 +1,8 @@
 'use strict';
 
+/** 
+ * @throws Server Error - 500
+ */
 export default (err, req, res, next) => {
   let error = {
     error: (typeof err === 'object' && err.message) || err,

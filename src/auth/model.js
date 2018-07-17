@@ -18,7 +18,11 @@ const userSchema = new mongoose.Schema({
   profile: { type: mongoose.Schema.Types.ObjectId, ref: 'profiles' },
 });
 
-// Before we save, hash the plain text password
+
+/**
+ * This function hashes the password before saving to the database.
+ * @param {string} password
+ */
 userSchema.pre('save', function(next) {
   bcrypt.hash(this.password,10)
     .then(hashedPassword => {
@@ -28,6 +32,11 @@ userSchema.pre('save', function(next) {
     .catch( error => {throw error;} );
 });
 
+/**
+ * This function validates user email and throws error if an invalid email, creates new account if does not exist, or welcomes back a previous user.
+ * @param {string} incoming.email
+ * @param {string} password
+ */
 userSchema.statics.createFromOAuth = function(incoming) {
 
   if ( ! incoming || ! incoming.email ) {
