@@ -1,6 +1,8 @@
 'use strict';
 
 import superagent from 'superagent';
+import atob from 'atob';
+
 const github = {};
 
 github.find = () => {
@@ -74,7 +76,7 @@ function parseFolder(data, url) {
     }
 
     if (data[i].name === 'README.md') {
-      contents['readme'] = data[i].download_url;
+      contents['readme'] = data[i].url;
     }
 
     if (data[i].name === 'config.json') {
@@ -116,7 +118,7 @@ function getChallenges(url) {
     .then(res => {
       var content = {};
       for (var i = 0; i < res.body.length; i++) {
-        content[res.body[i].name.split('.')[0]] = res.body[i].download_url;
+        content[res.body[i].name.split('.')[0]] = res.body[i].url;
       }
       return content;
     });
