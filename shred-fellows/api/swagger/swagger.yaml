@@ -1,0 +1,308 @@
+---
+swagger: "2.0"
+info:
+  description: Shred Fellows
+  version: "1.0.0"
+  title: Core API
+host: shred-fellows-server.herokuapp.com
+basePath: /api/v1
+schemes:
+- https
+paths:
+  /{model}:
+    get:
+      description: Retrieve all models in that folder
+      tags: 
+        - MongoDB/MLab
+      parameters:
+      - name: model
+        in: path
+        description: Name of the model
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+    post:
+      description: Save/Submit that model object
+      tags: 
+        - MongoDB/MLab
+      parameters:
+      - name: model
+        in: path
+        description: Name of the model
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+  /{model}/{id}:
+    get:
+      description: Retrieve a specific element by it's ID from a specific model
+      tags: 
+        - MongoDB/MLab
+      parameters:
+      - name: model
+        in: path
+        description: Name of the model
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: Id of the element in the model
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+    put:
+      description: Update that object
+      tags: 
+        - MongoDB/MLab
+      parameters:
+      - name: model
+        in: path
+        description: Name of the model
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: Id of the element in the model
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+  /github/{assignments}:
+    get:
+      description: Retrieve all assignments from the Github repo
+      tags: 
+        - Github
+      parameters:
+      - name: assignments
+        in: path
+        description: Retrieve all assignments from the Github repo
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+  /github/{assignments}/{assignmentName}:
+    get:
+      description: Retrieve all assignments from the Github repo
+      tags: 
+        - Github
+      parameters:
+      - name: assignments
+        in: path
+        description: Retrieve all assignments from the Github repo
+        required: true
+        type: string
+      - name: assignmentName
+        in: path
+        description: Retrieve the specific assignment
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+  /assignment:
+    post: 
+      consumes:
+        - application/json
+      summary: Testing
+      description: Posts an assignment to the user profile
+      tags: 
+        - Assignments
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            type: object
+            properties:
+              courseId:
+                type: string
+              assignmentId:
+                type: integer
+              profileId:
+                type: string
+              notes:
+                type: string
+              code:
+                type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+  /assignement/note/{assignmentid}:
+    put: 
+      consumes:
+        - application/json
+      summary: Testing
+      description: Updates assignment note by the user
+      tags: 
+        - Assignments
+      parameters:
+        - in: path
+          name: assignmentid
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            type: object
+            properties:
+              courseId:
+                type: string
+              assignmentId:
+                type: integer
+              profileId:
+                type: string
+              notes:
+                type: string
+              code:
+                type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'    
+  /assignment/code/{assignmentid}/challengename:
+    put: 
+      consumes:
+        - application/json
+      summary: Updates an assignment code only
+      description: Updates an assignment code only
+      tags: 
+        - Assignments
+      parameters:
+        - in: path
+          name: assignmentid
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            type: object
+            properties:
+              courseId:
+                type: string
+              assignmentId:
+                type: integer
+              profileId:
+                type: string
+              notes:
+                type: string
+              code:
+                type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/inline_response_Error'
+            
+definitions:
+  inline_response_200:
+    type: array
+    items:
+      type: object
+      properties: {}
+    example:
+      - '{}'
+      - '{}'
+  inline_response_Error:
+    type: array
+    items:
+      type: object
+      properties: {}
+    example:
+      - '{}'
+      - '{}'

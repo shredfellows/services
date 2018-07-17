@@ -10,7 +10,9 @@
     "watch": "nodemon index.js",
     "test-watch": "jest --coverage --verbose --watchAll",
     "test": "jest --coverage --verbose",
-    "lint": "eslint **/*.js"
+    "lint": "eslint **/*.js",
+    "swagger-edit": "cd shred-fellows/ && swagger project edit",
+    "swagger-test": "cd shred-fellows/ && swagger project test"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +33,7 @@
     "nel": "^1.0.0",
     "require-dir": "^1.0.0",
     "superagent": "^3.8.3",
-    "swagger": "^0.7.5"
+    "swagger": "^0.7.5",
+    "swagger-editor": "^3.6.3"
   }
 }
