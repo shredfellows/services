@@ -14,6 +14,8 @@ paths:
       description: Retrieve all models in that folder
       tags: 
         - MongoDB/MLab
+      produces:
+        - application/json
       parameters:
       - name: model
         in: path
@@ -37,6 +39,8 @@ paths:
       description: Save/Submit that model object
       tags: 
         - MongoDB/MLab
+      produces:
+        - application/json
       parameters:
       - name: model
         in: path
@@ -61,6 +65,8 @@ paths:
       description: Retrieve a specific element by it's ID from a specific model
       tags: 
         - MongoDB/MLab
+      produces:
+        - application/json
       parameters:
       - name: model
         in: path
@@ -89,6 +95,8 @@ paths:
       description: Update that object
       tags: 
         - MongoDB/MLab
+      produces:
+        - application/json
       parameters:
       - name: model
         in: path
@@ -118,6 +126,8 @@ paths:
       description: Retrieve all assignments from the Github repo
       tags: 
         - Github
+      produces:
+        - application/json
       parameters:
       - name: assignments
         in: path
@@ -142,6 +152,8 @@ paths:
       description: Retrieve all assignments from the Github repo
       tags: 
         - Github
+      produces:
+        - application/json
       parameters:
       - name: assignments
         in: path
@@ -168,12 +180,14 @@ paths:
             $ref: '#/definitions/inline_response_Error'
   /assignment:
     post: 
-      consumes:
-        - application/json
       summary: Testing
       description: Posts an assignment to the user profile
       tags: 
         - Assignments
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
         - in: body
           name: body
@@ -206,12 +220,14 @@ paths:
             $ref: '#/definitions/inline_response_Error'
   /assignement/note/{assignmentid}:
     put: 
-      consumes:
-        - application/json
       summary: Testing
       description: Updates assignment note by the user
       tags: 
         - Assignments
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
         - in: path
           name: assignmentid
@@ -248,12 +264,14 @@ paths:
             $ref: '#/definitions/inline_response_Error'    
   /assignment/code/{assignmentid}/challengename:
     put: 
-      consumes:
-        - application/json
       summary: Updates an assignment code only
       description: Updates an assignment code only
       tags: 
         - Assignments
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
         - in: path
           name: assignmentid
