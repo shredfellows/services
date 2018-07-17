@@ -3,6 +3,16 @@
 import mongoose from 'mongoose';
 import Profile from './profiles.js';
 
+/**
+ * Create a `mongoose.Schema` instance for assignments
+ * @param {string} courseId (pulls from canvas)
+ * @param {Number} assignmentId (pulls from canvas)
+ * @param {string} notes (entered by student)
+ * @param {Object} code (entered by student)
+ * @param {Object} profileID (pulls from profiles)
+ * 
+ */
+
 const assignmentSchema = mongoose.Schema({
   courseId: {type: String},
   assignmentId: {type:Number},
@@ -16,6 +26,9 @@ const assignmentSchema = mongoose.Schema({
 //   next();
 // });
 
+/**
+ * Find by profileID and verify if the user profile is valid.
+ */
 assignmentSchema.pre('save', function (next) {
   let profileId = this.profileId;
   let assId = this._id;

@@ -4,6 +4,13 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
 import Users from '../auth/model.js';
+/**
+ * Create a `mongoose.Schema` instance for profileSchema
+ * @param {object} userId (from userSchema)
+ * @param {object} usrname (from userSchema)
+ * @param {string} email (from userSchema)
+ * @param {object} assignments (from assignmentSchema)
+ */
 
 const profileSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
@@ -17,6 +24,14 @@ profileSchema.pre('findOne', function (next) {
   next();
 });
 
+/**
+ * Creates user profile from OAuth login information
+ * @method createFromOAuth
+ * @param {object} incoming
+ * @param {String} incoming.username - the username 
+ * @param {String} incoming.password - the password
+ * @param {String} incoming.email - the email
+ */
 profileSchema.statics.createFromOAuth = function (incoming) {
   if (!incoming || !incoming.username) {
     return Promise.reject('VALIDATION ERROR: Not an existing user');
@@ -37,10 +52,15 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     });
 };
 
+/** Generates a jwt token that contains the user_id
+ * @method generateToken
+ */
 profileSchema.methods.generateToken = function () {
   return jwt.sign({ id: this.userId }, process.env.SECRET || 'changeit');
 };
 
+/** Finds the user by ID and updates record
+ */
 profileSchema.pre('save', function (next) {
   let profileId = this._id;
   let userId = this.userId;
