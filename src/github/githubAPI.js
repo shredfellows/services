@@ -74,7 +74,7 @@ function parseFolder(data, url) {
     }
 
     if (data[i].name === 'README.md') {
-      contents['readme'] = atob(data[i].content);
+      contents['readme'] = data[i].download_url;
     }
 
     if (data[i].name === 'config.json') {
