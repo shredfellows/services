@@ -1,6 +1,8 @@
 'use strict';
 
 import superagent from 'superagent';
+import atob from 'atob';
+
 const github = {};
 
 github.find = () => {
@@ -74,7 +76,8 @@ function parseFolder(data, url) {
     }
 
     if (data[i].name === 'README.md') {
-      contents['readme'] = data[i].download_url;
+      superagent.get(data[i].url)
+        .then(results => contents['readme'] = atob(results.body.content));
     }
 
     if (data[i].name === 'config.json') {
