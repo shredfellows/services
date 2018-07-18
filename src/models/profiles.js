@@ -47,7 +47,7 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     })
     .catch(error => {
       return this.create({
-        userId: incoming._id,
+        userId: incoming.userId,
         name: incoming.name,
         username: incoming.username,
         email: incoming.email,

@@ -49,10 +49,15 @@ const authorize = (req, res) => {
         });
     })
     .then(githubUser => {
-      User.createFromOAuth(githubUser);
-      return Profile.createFromOAuth(githubUser);
+      return User.createFromOAuth(githubUser)
+        .then(user => {
+          githubUser.userId = user._id;
+          console.log({githubUser});
+          return Profile.createFromOAuth(githubUser);
+        });
     })
     .then(profile => {
+      console.log({profile});
       return profile.generateToken();
     })
     .catch(error => error);
