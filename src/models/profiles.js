@@ -4,11 +4,20 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
 import Users from '../auth/model.js';
+/**
+ * Create a `mongoose.Schema` instance for profileSchema
+ * @param {object} userId (from userSchema)
+ * @param {object} usrname (from userSchema)
+ * @param {string} email (from userSchema)
+ * @param {object} assignments (from assignmentSchema)
+ */
 
 const profileSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+  name: {type: String, required: true, default: 'John is Bald'},
   username: { type: mongoose.Schema.Types.String, ref: 'users'},
   email: { type: String, required: true, unique: true },
+  profileImage: {type: String},
   assignments: [{type:mongoose.Schema.Types.ObjectId, ref: 'assignment'}],
 });
 
@@ -17,6 +26,14 @@ profileSchema.pre('findOne', function (next) {
   next();
 });
 
+/**
+ * Creates user profile from OAuth login information
+ * @method createFromOAuth
+ * @param {object} incoming
+ * @param {String} incoming.username - the username 
+ * @param {String} incoming.password - the password
+ * @param {String} incoming.email - the email
+ */
 profileSchema.statics.createFromOAuth = function (incoming) {
   if (!incoming || !incoming.username) {
     return Promise.reject('VALIDATION ERROR: Not an existing user');
@@ -30,17 +47,24 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     })
     .catch(error => {
       return this.create({
-        userId: incoming._id,
+        userId: incoming.userId,
+        name: incoming.name,
         username: incoming.username,
         email: incoming.email,
+        profileImage: incoming.profileImage,
       });
     });
 };
 
+/** Generates a jwt token that contains the user_id
+ * @method generateToken
+ */
 profileSchema.methods.generateToken = function () {
   return jwt.sign({ id: this.userId }, process.env.SECRET || 'changeit');
 };
 
+/** Finds the user by ID and updates record
+ */
 profileSchema.pre('save', function (next) {
   let profileId = this._id;
   let userId = this.userId;

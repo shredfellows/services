@@ -15,17 +15,17 @@ authRouter.post('/signup', (req, res, next) => {
     .catch(next);
 });
 
-authRouter.get('/login', auth, (req, res, next) => {
+authRouter.get('/login', (req, res, next) => {
   res.cookie('Token', req.token);
   res.send(req.user);
 });
 
 authRouter.get('/oauth', (req, res, next) => {
-
   oauth.authorize(req)
-    .then ( token => {
-      console.log('HERES THE TOKEN WE NEED:', token);
+    .then(token => {
+      console.log('HERES THE TOKEN WE NEED: ', token);
       res.cookie('Token', token);
+      res.cookie('GHT', process.env.GITHUB_TOKEN);
       res.redirect(process.env.CLIENT_URL);
     })
     .catch(next);

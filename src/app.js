@@ -39,7 +39,15 @@ app.use(errorHandler);
 
 let server = false;
 
+
+/**
+ * This exports a start and stop function for the server 
+ * @module app
+ */
 module.exports = {
+  /**
+   * server start
+   */
   start: (port) => {
     if(! server) {
       server = app.listen(port, (err) => {
@@ -51,6 +59,9 @@ module.exports = {
       console.log('Server is already running');
     }
   },
+  /**
+   * server stop
+   */
   stop: () => {
     server.close( () => {
       console.log('Server has been stopped');

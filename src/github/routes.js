@@ -1,6 +1,7 @@
 'use strict';
 
 import express from 'express';
+import superagent from 'superagent';
 
 import Github from './githubAPI.js';
 

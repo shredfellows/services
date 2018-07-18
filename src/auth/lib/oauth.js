@@ -5,41 +5,62 @@ import superagent from 'superagent';
 import User from '../model';
 import Profile from '../../models/profiles';
 
-const authorize = (req) => {
+const authorize = (req, res) => {
 
+  let URL = process.env.CLIENT_URL;
   let code = req.query.code;
 
-  return superagent.post('https://www.googleapis.com/oauth2/v4/token')
+  console.log('(1) code', code);
+
+  // exchange the code or a token
+  return superagent.post('https://github.com/login/oauth/access_token')
     .type('form')
     .send({
       code: code,
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      client_id: process.env.GITHUB_CLIENT_ID,
+      client_secret: process.env.GITHUB_CLIENT_SECRET,
       redirect_uri: `${process.env.API_URL}/oauth`,
       grant_type: 'authorization_code',
     })
-    .then( response => {
-      let googleToken = response.body.access_token;
-      return googleToken;
+    .then(response => {
+      let gitToken = response.body.access_token;
+      console.log('(2) github token', gitToken);
+      return gitToken;
     })
-    .then ( token => {
-      return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+    .then(token => {
+      let githubUser = {};
+
+      return superagent.get('https://api.github.com/user')
         .set('Authorization', `Bearer ${token}`)
-        .then (response => {
-          let user = response.body;
-          return user;
+        .then(response => {
+          console.log('(3) Github User username', response.body.login);
+          githubUser['name'] = response.body.name;
+          githubUser['username'] = response.body.login;
+          githubUser['profileImage'] = response.body.avatar_url;
+        
+          return superagent.get('https://api.github.com/user/emails')
+            .set('Authorization', `Bearer ${token}`)
+            .then(response => {
+              console.log('(4) Github User email', response.body[0].email);
+              githubUser['email'] = response.body[0].email;
+
+              return githubUser;
+            });
         });
     })
-    .then(googleUser => {
-      return User.createFromOAuth(googleUser);
+    .then(githubUser => {
+      return User.createFromOAuth(githubUser)
+        .then(user => {
+          githubUser.userId = user._id;
+          console.log({githubUser});
+          return Profile.createFromOAuth(githubUser);
+        });
     })
-    .then(user => {
-      return Profile.createFromOAuth(user);
-    })
-    .then (profile => {
+    .then(profile => {
+      console.log({profile});
       return profile.generateToken();
     })
-    .catch(error=>error);
+    .catch(error => error);
 };
 
 export default {authorize};
