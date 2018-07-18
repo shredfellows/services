@@ -39,7 +39,7 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     return Promise.reject('VALIDATION ERROR: Not an existing user');
   }
 
-  return this.findOne({ userId: incoming._id })
+  return this.findOne({ userId: incoming.userId })
     .then(profile => {
       if (!profile) { throw new Error('User Not Found'); }
       console.log('Welcome Back', profile.username);
