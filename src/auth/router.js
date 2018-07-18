@@ -16,8 +16,6 @@ authRouter.post('/signup', (req, res, next) => {
 });
 
 authRouter.get('/login', (req, res, next) => {
-  res.redirect('https://github.com/login/oauth/authorize?client_id=252d0f262488210326f6&scope=user,user:email&redirect_uri=http://localhost:3000/oauth');
-
   res.cookie('Token', req.token);
   res.send(req.user);
 });

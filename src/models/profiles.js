@@ -7,8 +7,10 @@ import Users from '../auth/model.js';
 
 const profileSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+  name: {type: String, required: true, default: 'John is Bald'},
   username: { type: mongoose.Schema.Types.String, ref: 'users'},
   email: { type: String, required: true, unique: true },
+  profileImage: {type: String},
   assignments: [{type:mongoose.Schema.Types.ObjectId, ref: 'assignment'}],
 });
 
@@ -31,8 +33,10 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     .catch(error => {
       return this.create({
         userId: incoming._id,
+        name: incoming.name,
         username: incoming.username,
         email: incoming.email,
+        profileImage: incoming.profileImage,
       });
     });
 };

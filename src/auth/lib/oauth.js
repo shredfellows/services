@@ -34,7 +34,9 @@ const authorize = (req, res) => {
         .set('Authorization', `Bearer ${token}`)
         .then(response => {
           console.log('(3) Github User username', response.body.login);
+          githubUser['name'] = response.body.name;
           githubUser['username'] = response.body.login;
+          githubUser['profileImage'] = response.body.avatar_url;
         
           return superagent.get('https://api.github.com/user/emails')
             .set('Authorization', `Bearer ${token}`)
@@ -47,16 +49,8 @@ const authorize = (req, res) => {
         });
     })
     .then(githubUser => {
-      console.log(`(5) github user: ${githubUser.username}, ${githubUser.email}`);
-      return User.createFromOAuth(githubUser);
-    })
-    .then(user => {
-      return user.generateToken();
-    })
-    .then(token => {
-      console.log(`(6) token: ${token}`);
-      res.cookie('Token ', token);
-      res.redirect(URL);
+      User.createFromOAuth(githubUser);
+      return Profile.createFromOAuth(githubUser);
     })
     .then(profile => {
       return profile.generateToken();
