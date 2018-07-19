@@ -9,25 +9,15 @@ import {runCode} from './utils.js';
 
 const router = express.Router();
 
-router.post('/api/v1/code', (req, res, next) => {
-
-  let code = req.body.code.trim();
-  
-  runCode(code)
-    .then(solution => sendJSON(res, solution))
-    .catch(next);
-});
-
 router.put('/api/v1/code/:assignmentid/:challengeName', auth, (req, res, next) => {
 
-  let challenge = req.params.challengeName;
-
-  let code = req.body.code[challenge].trim();
+  let code = req.body;
+  console.log('REQ>BODY', req.body);
 
   Assignment.findOneAndUpdate({
     _id: req.params.assignmentid,
   }, {
-    code: req.body.code,
+    code: code,
   })
     .then(() => runCode(code))
     .then(solution => {
@@ -36,6 +26,16 @@ router.put('/api/v1/code/:assignmentid/:challengeName', auth, (req, res, next) =
     })
     .catch(next);
 });
+
+router.post('/api/v1/code', (req, res, next) => {
+
+  let code = req.body.code.trim();
+
+  runCode(code)
+    .then(solution => sendJSON(res, solution))
+    .catch(next);
+});
+
 
 let sendJSON = (res, data) => {
   res.statusCode = 200;
