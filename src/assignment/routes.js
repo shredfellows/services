@@ -8,7 +8,7 @@ import auth from '../auth/middleware.js';
 const router = express.Router();
 
 router.post('/api/v1/assignment', auth, (req, res, next) => {
-
+  console.log('request to post assignment', req.body);
   let asgn = new Assignment(req.body);
   asgn.code = req.body.code;
 
