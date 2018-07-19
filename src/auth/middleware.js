@@ -14,13 +14,10 @@ export default (req, res, next) => {
  * @param {string} token - The token that is sent as a cookie and then set bearer token.
  */
   let authorize = (token) => {
-    console.log('token coming into profile authorize', token);
     Profile.authorize(token)
       .then(profile => {
-        console.log('profile in prof authorize if', profile);
         if(!profile) { getAuth(); }
         else { 
-          console.log('profile in prof authorize else',req.profile);
           req.profile = profile;
           next(); }
       })
@@ -51,8 +48,6 @@ export default (req, res, next) => {
   try {
     let auth = {};
     let authHeader = req.headers.authorization;
-    console.log('HEYYYYYY', req.body);
-    console.log({authHeader});
     if(!authHeader) {
       return getAuth();
     }

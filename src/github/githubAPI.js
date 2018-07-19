@@ -21,7 +21,6 @@ github.findOne = (req) => {
       'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN,
     })
     .then(res => {
-      console.log({ res });
       return parseFolder(res.body, process.env.GITHUB_ASSIGNMENTS_URL + req.split(/[.]+/).join('/'));
     }).catch(console.error);
 };
