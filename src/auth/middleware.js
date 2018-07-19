@@ -14,8 +14,10 @@ export default (req, res, next) => {
  * @param {string} token - The token that is sent as a cookie and then set bearer token.
  */
   let authorize = (token) => {
+    console.log('token coming into profile authorize', token);
     Profile.authorize(token)
       .then(profile => {
+        console.log(profile);
         if(!profile) { getAuth(); }
         else { 
           req.profile = profile;

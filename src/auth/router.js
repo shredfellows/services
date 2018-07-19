@@ -17,7 +17,7 @@ authRouter.post('/signup', (req, res, next) => {
 
 authRouter.get('/login', auth, (req, res, next) => {
   res.cookie('Token', req.token);
-  res.send(req.user);
+  res.send(req.profile);
 });
 
 authRouter.get('/oauth', (req, res, next) => {
