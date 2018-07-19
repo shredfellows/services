@@ -56,11 +56,23 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     });
 };
 
+//generate token with _id of profile instead of userID
+
 /** Generates a jwt token that contains the user_id
  * @method generateToken
  */
 profileSchema.methods.generateToken = function () {
   return jwt.sign({ id: this.userId }, process.env.SECRET || 'changeit');
+};
+
+profileSchema.statics.authorize = function(token) {
+  let parsedToken = jwt.verify(token, process.env.SECRET || 'changeit');
+  let query = {userId:parsedToken.id}; 
+  return this.findOne(query)
+    .then(profile => {
+      return profile;
+    })
+    .catch(error => {error;});
 };
 
 /** Finds the user by ID and updates record
