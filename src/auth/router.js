@@ -15,9 +15,9 @@ authRouter.post('/signup', (req, res, next) => {
     .catch(next);
 });
 
-authRouter.get('/login', (req, res, next) => {
+authRouter.get('/login', auth, (req, res, next) => {
   res.cookie('Token', req.token);
-  res.send(req.user);
+  res.send(req.profile);
 });
 
 authRouter.get('/oauth', (req, res, next) => {
@@ -25,6 +25,7 @@ authRouter.get('/oauth', (req, res, next) => {
     .then(token => {
       console.log('HERES THE TOKEN WE NEED: ', token);
       res.cookie('Token', token);
+      res.cookie('GHT', process.env.GITHUB_TOKEN);
       res.redirect(process.env.CLIENT_URL);
     })
     .catch(next);

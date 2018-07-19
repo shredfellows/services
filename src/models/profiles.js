@@ -39,7 +39,7 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     return Promise.reject('VALIDATION ERROR: Not an existing user');
   }
 
-  return this.findOne({ userId: incoming._id })
+  return this.findOne({ userId: incoming.userId })
     .then(profile => {
       if (!profile) { throw new Error('User Not Found'); }
       console.log('Welcome Back', profile.username);
@@ -47,7 +47,7 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     })
     .catch(error => {
       return this.create({
-        userId: incoming._id,
+        userId: incoming.userId,
         name: incoming.name,
         username: incoming.username,
         email: incoming.email,
@@ -56,11 +56,23 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     });
 };
 
+//generate token with _id of profile instead of userID
+
 /** Generates a jwt token that contains the user_id
  * @method generateToken
  */
 profileSchema.methods.generateToken = function () {
   return jwt.sign({ id: this.userId }, process.env.SECRET || 'changeit');
+};
+
+profileSchema.statics.authorize = function(token) {
+  let parsedToken = jwt.verify(token, process.env.SECRET || 'changeit');
+  let query = {userId:parsedToken.id}; 
+  return this.findOne(query)
+    .then(profile => {
+      return profile;
+    })
+    .catch(error => {error;});
 };
 
 /** Finds the user by ID and updates record

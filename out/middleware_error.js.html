@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: app.js</title>
+    <title>JSDoc: Source: middleware/error.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: app.js</h1>
+    <h1 class="page-title">Source: middleware/error.js</h1>
 
     
 
@@ -28,73 +28,18 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-// 3rd Party Libraries
-import express from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-
-// Custom Libraries
-import genericRouter from './api/api.js';
-import codeRouter from './code-runner/routes.js';
-import assgnRouter from './assignment/routes.js';
-import gitHubRouter from './github/routes.js';
-
-// Custom Middleware
-import errorHandler from './middleware/error.js';
-import notFound from './middleware/404.js';
-import authRouter from './auth/router.js';
-
-
-let app = express();
-
-// App level middleware
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-
-// Our API Routes
-app.use(gitHubRouter);
-app.use(assgnRouter);
-app.use(codeRouter);
-app.use(authRouter);
-app.use(genericRouter);
-
-
-// Errors and 404's
-app.use(notFound);
-app.use(errorHandler);
-
-let server = false;
-
-
-/**
- * This exports a start and stop function for the server 
- * @module app
+/** 
+ * @throws Server Error - 500
  */
-module.exports = {
-  /**
-   * server start
-   */
-  start: (port) => {
-    if(! server) {
-      server = app.listen(port, (err) => {
-        if(err) { throw err; }
-        console.log(`Server up on ${port}`);
-      });
-    }
-    else {
-      console.log('Server is already running');
-    }
-  },
-  /**
-   * server stop
-   */
-  stop: () => {
-    server.close( () => {
-      console.log('Server has been stopped');
-    });
-  },
+export default (err, req, res, next) => {
+  let error = {
+    error: (typeof err === 'object' &amp;&amp; err.message) || err,
+  };
+  res.statusCode = (typeof err === 'object' &amp;&amp; err.status) || 500;
+  res.statusMessage = (typeof err === 'object' &amp;&amp; err.statusMessage) || 'Server Error';
+  res.setHeader('Content-Type', 'application/json');
+  res.write(JSON.stringify(error));
+  res.end();
 };
 </code></pre>
         </article>

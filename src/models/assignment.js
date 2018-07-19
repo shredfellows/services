@@ -16,6 +16,7 @@ import Profile from './profiles.js';
 const assignmentSchema = mongoose.Schema({
   courseId: {type: String},
   assignmentId: {type:Number},
+  assignmentName: {type: String},
   profileId: {type: mongoose.Schema.Types.ObjectId, ref:'profiles'},
   notes: {type: String},
   code: {type: Object},

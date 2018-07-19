@@ -1,6 +1,8 @@
 'use strict';
 
 import User from './model.js';
+import Profile from '../models/profiles.js';
+
 
 /** A module that checks the authorization headers and authenticates or authorizes the user
  * @module auth/middleware
@@ -12,11 +14,11 @@ export default (req, res, next) => {
  * @param {string} token - The token that is sent as a cookie and then set bearer token.
  */
   let authorize = (token) => {
-    User.authorize(token)
-      .then(user => {
-        if(!user) { getAuth(); }
+    Profile.authorize(token)
+      .then(profile => {
+        if(!profile) { getAuth(); }
         else { 
-          req.user = user;
+          req.profile = profile;
           next(); }
       })
       .catch(next);
