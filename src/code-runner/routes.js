@@ -12,7 +12,6 @@ const router = express.Router();
 router.put('/api/v1/code/:assignmentid/:challengeName', auth, (req, res, next) => {
 
   let code = req.body;
-  console.log('REQ>BODY', req.body);
 
   Assignment.findOneAndUpdate({
     _id: req.params.assignmentid,
@@ -21,7 +20,6 @@ router.put('/api/v1/code/:assignmentid/:challengeName', auth, (req, res, next) =
   })
     .then(() => runCode(code))
     .then(solution => {
-      console.log('I\'m Here:', { solution });
       sendJSON(res, solution);
     })
     .catch(next);
