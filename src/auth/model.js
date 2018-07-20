@@ -45,7 +45,7 @@ userSchema.statics.createFromOAuth = function(incoming) {
 
   return this.findOne({email:incoming.email})
     .then(user => {
-      if ( ! user ) { throw new Error ('User Not Found'); }=
+      if ( ! user ) { throw new Error ('User Not Found'); }
       return user;
     })
     .catch( error => { // eslint-disable-line
