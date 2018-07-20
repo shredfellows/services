@@ -11,9 +11,9 @@
     "test-watch": "jest --coverage --verbose --watchAll",
     "test": "jest --coverage --verbose",
     "lint": "eslint **/*.js",
-    "swagger-start": "cd shred-fellows/ && swagger project start",
-    "swagger-edit": "cd shred-fellows/ && swagger project edit",
-    "swagger-test": "cd shred-fellows/ && swagger project test"
+    "swagger-start": "cd /doc/swagger/shred-fellows/ && swagger project start",
+    "swagger-edit": "cd /doc/swagger/shred-fellows/ && swagger project edit",
+    "swagger-test": "cd /doc/swagger/shred-fellows/ && swagger project test"
   },
   "keywords": [],
   "author": "",
