@@ -14,10 +14,8 @@ export default (req, res, next) => {
  * @param {string} token - The token that is sent as a cookie and then set bearer token.
  */
   let authorize = (token) => {
-    console.log('TOKEN FROM MIDDLEWARE', token);
     Profile.authorize(token)
       .then(profile => {
-        console.log('PROFILE DATA MIDDLEWARE', profile);
         if(!profile) { getAuth(); }
         else { 
           req.profile = profile;
