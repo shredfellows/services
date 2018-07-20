@@ -42,7 +42,6 @@ profileSchema.statics.createFromOAuth = function (incoming) {
   return this.findOne({ userId: incoming.userId })
     .then(profile => {
       if (!profile) { throw new Error('User Not Found'); }
-      console.log('Welcome Back', profile.username);
       return profile;
     })
     .catch(error => {
@@ -56,7 +55,6 @@ profileSchema.statics.createFromOAuth = function (incoming) {
     });
 };
 
-//generate token with _id of profile instead of userID
 
 /** Generates a jwt token that contains the user_id
  * @method generateToken

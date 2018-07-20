@@ -7,7 +7,6 @@ import Github from './githubAPI.js';
 
 const router = express.Router();
 
-//Get One
 router.get('/api/v1/github/:assignmentName', (req, res, next) => {
   let assName = req.params.assignmentName;
   
@@ -18,7 +17,6 @@ router.get('/api/v1/github/:assignmentName', (req, res, next) => {
 
 });
 
-//Get All
 router.get('/api/v1/github', (req, res, next) => {
   Github.find()
     .then(data => {
