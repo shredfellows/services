@@ -16,7 +16,6 @@ router.post('/api/v1/assignment', auth, (req, res, next) => {
     .catch(next);
 });
 
-//Post the student's notes for a specfic assignment
 router.put('/api/v1/assignment/note/:assignmentid', auth, (req, res, next) => {
 
   Assignment.findOneAndUpdate({ _id: req.params.assignmentid }, { notes: req.body.notes })

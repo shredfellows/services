@@ -22,10 +22,6 @@ const assignmentSchema = mongoose.Schema({
   code: {type: Object},
 });
 
-// assignmentSchema.pre('findOne', function(next) {
-//   this.populate('profileId');
-//   next();
-// });
 
 /**
  * Find by profileID and verify if the user profile is valid.
