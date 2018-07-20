@@ -16,7 +16,6 @@ authRouter.post('/signup', (req, res, next) => {
 });
 
 authRouter.get('/login', auth, (req, res, next) => {
-  res.cookie('Token', Token, {domain: '.shredfellows.ccs.net'});
   res.send(req.profile);
 });
 
