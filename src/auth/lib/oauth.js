@@ -43,6 +43,9 @@ const authorize = (req, res) => {
         });
     })
     .then(githubUser => {
+    // THIS IS FOR TESTING PURPOSES
+      console.log('USER FROM GH', githubUser);
+    // TESTING................
       return User.createFromOAuth(githubUser)
         .then(user => {
           githubUser.userId = user._id;
