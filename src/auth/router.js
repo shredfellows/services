@@ -29,4 +29,10 @@ authRouter.get('/oauth', (req, res, next) => {
     .catch(next);
 });
 
+authRouter.get('/logout', (req, res, next) => {
+  res.cookie('Token', '', { domain: '.shredfellows.ccs.net' });
+  res.cookie('GHT', '', { domain: '.shredfellows.ccs.net' });
+  res.redirect(process.env.CLIENT_URL);
+});
+
 export default authRouter;
