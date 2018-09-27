@@ -23,17 +23,11 @@ authRouter.get('/oauth', (req, res, next) => {
   let clientUrl = process.env.CLIENT_URL + '/dashboard';
   oauth.authorize(req)
     .then(token => {
-      res.cookie('Token', token);
-      res.cookie('GHT', process.env.GITHUB_TOKEN);
+      res.cookie('Token', token, { domain: '.shredfellows.ccs.net' });
+      res.cookie('GHT', process.env.GITHUB_TOKEN, { domain: '.shredfellows.ccs.net' });
       res.redirect(clientUrl);
     })
     .catch(next);
-});
-
-authRouter.get('/logout', (req, res, next) => {
-  res.clearCookie('Token', '');
-  res.clearCookie('GHT', '');
-  res.redirect(process.env.CLIENT_URL);
 });
 
 export default authRouter;
