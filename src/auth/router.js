@@ -22,8 +22,8 @@ authRouter.get('/login', auth, (req, res, next) => {
 authRouter.get('/oauth', (req, res, next) => {
   oauth.authorize(req)
     .then(token => {
-      res.cookie('Token', token, {domain: '.shredfellows.ccs.net'});
-      res.cookie('GHT', process.env.GITHUB_TOKEN, {domain: '.shredfellows.ccs.net'});
+      res.cookie('Token', token, {domain: process.env.COOKIE_DOMAIN});
+      res.cookie('GHT', process.env.GITHUB_TOKEN, {domain: process.env.COOKIE_DOMAIN});
       res.redirect(process.env.CLIENT_URL);
     })
     .catch(next);
