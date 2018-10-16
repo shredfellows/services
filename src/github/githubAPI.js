@@ -21,6 +21,7 @@ github.findOne = (req) => {
       'Authorization': 'Bearer ' + process.env.GITHUB_TOKEN,
     })
     .then(res => {
+      console.log('res from findONe', res.body);
       return parseFolder(res.body, process.env.GITHUB_ASSIGNMENTS_URL + req.split(/[.]+/).join('/'));
     }).catch(console.error);
 };
@@ -75,9 +76,9 @@ function parseFolder(data, url) {
       promises.push(getChallenges(url+'/challenges/'));
     }
 
-    if (data[i].name === 'README.md') {
-      contents['readme'] = data[i].url;
-    }
+    // if (data[i].name === 'README.md') {
+    //   contents['readme'] = data[i].url;
+    // }
 
     if (data[i].name === 'config.json') {
       promises.push(parseFile(data[i].download_url));
@@ -88,10 +89,17 @@ function parseFolder(data, url) {
   return Promise.all(promises).then(values => {
     var challenges = {};
     values.forEach(value => {
+
+      console.log('here is the value', value);
       Object.keys(value).map(function (key) {
         if (key === 'video') {
           contents['video'] = value.video;
         }
+
+        if (key === 'readme') {
+          contents['readme'] = value.readme;
+        }
+
         if (key.includes('challenge')) {
           challenges[key] = value[key];
         }
